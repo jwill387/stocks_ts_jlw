@@ -16,12 +16,16 @@ ui <- fluidPage(
     label = "Select Date Range:",
     min = min(stocks$date),
     max = max(stocks$date),
+    start = min(stocks$date),
+    end = max(stocks$date)
   ),
   
   plotOutput("ts.plot"),
-  verbatimTextOutput("abbr"),
   print("Minimum Share Price:"),
-  verbatimTextOutput("min"),
+ verbatimTextOutput("min"),
   print("Maximum Share Price:"),
   verbatimTextOutput("max"),
 )
+
+# renderText()
+# textOutput()

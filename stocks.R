@@ -9,6 +9,7 @@ stocks <- read.csv("nyse_stocks.csv")
 #Convert to tsibble()
 stocks$date <- as.Date(stocks$date)
 stocks <- tsibble(stocks, index = date, key = symbol)
+
 # 
 # # Plotting 1 stock
 # selected_stock <- "AAPL"

@@ -21,11 +21,12 @@ ui <- fluidPage(
   ),
   
   plotOutput("ts.plot"),
-  print("Minimum Share Price:"),
- verbatimTextOutput("min"),
-  print("Maximum Share Price:"),
-  verbatimTextOutput("max"),
+  h3("Minimum Share Price:"),
+  h4(textOutput("min")),
+  h3("Maximum Share Price:"),
+  h4(textOutput("max")),
+  h3(print("Stock Growth:")),
+  h4(textOutput("stock.growth")),
+  h3(print("Stock Growth vs. Industry Growth:")),
+  h4(textOutput("industry.growth"))
 )
-
-# renderText()
-# textOutput()

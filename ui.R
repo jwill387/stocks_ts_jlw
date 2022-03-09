@@ -19,5 +19,9 @@ ui <- fluidPage(
   ),
   
   plotOutput("ts.plot"),
-  verbatimTextOutput("abbr")
+  verbatimTextOutput("abbr"),
+  print("Minimum Share Price:"),
+  verbatimTextOutput("min"),
+  print("Maximum Share Price:"),
+  verbatimTextOutput("max"),
 )

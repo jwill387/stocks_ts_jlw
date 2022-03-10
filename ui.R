@@ -1,40 +1,41 @@
-library(fpp3)
-library(dplyr)
-library(tidyverse)
-library(tsibble)
-library(shiny)
-
-ui <- fluidPage(
-  selectInput(
-    inputId = "selected_stock",
-    label = "Select Stock:",
-    choices = unique(stocks$symbol)
+ui <- dashboardPage(
+  dashboardHeader(title = "Stock Information"),
+  dashboardSidebar(
+    selectInput(
+      inputId = "selected_stock",
+      label = "Select Stock:",
+      choices = unique(stocks$symbol)
+    ),
+    
+    dateRangeInput(
+      inputId = "selected_date_range",
+      label = "Select Date Range:",
+      min = min(stocks$date),
+      max = max(stocks$date),
+      start = min(stocks$date),
+      end = max(stocks$date)
+    ),
+    
+    numericInput(
+      inputId = "investment",
+      label = "Enter Initial Investment:",
+      value = 1
+    ),
+    
+    checkboxInput(
+      inputId = "trendline",
+      label = "Trend Line",
+      value = TRUE
+    )
   ),
-  
-  dateRangeInput(
-    inputId = "selected_date_range",
-    label = "Select Date Range:",
-    min = min(stocks$date),
-    max = max(stocks$date),
-    start = min(stocks$date),
-    end = max(stocks$date)
-  ),
-  
-  checkboxInput(
-    inputId = "trendline",
-    label = "Trend line",
-    value = TRUE
-  ),
-  
-  plotOutput("ts.plot"),
-  h3("Minimum Share Price:"),
-  h4(textOutput("min")),
-  h3("Maximum Share Price:"),
-  h4(textOutput("max")),
-  h3(print("Stock Growth:")),
-  h4(textOutput("stock.growth")),
-  h3(print("Stock Growth vs. Industry Growth:")),
-  h4(textOutput("industry.growth")),
-  h3(print("Industry:")),
-  h4(textOutput("industry"))
+  dashboardBody(
+  plotlyOutput("ts.plot"),
+  infoBoxOutput("invest.out"),
+  infoBoxOutput("max.invest"),
+  infoBoxOutput("min"),
+  infoBoxOutput("max"),
+  infoBoxOutput("stock.growth"),
+  infoBoxOutput("industry.growth"),
+  infoBoxOutput("industry")
+)
 )

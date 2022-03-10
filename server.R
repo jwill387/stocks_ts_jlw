@@ -1,38 +1,26 @@
 server <- function(input, output) {
-  output$abbr <- renderText({
-    stocks[stocks$symbol == input$selected_stock, ]
-  })
-  
-  
-  output$ts.plot <- renderPlot({
-    stockplot <- stocks %>%
+  output$ts.plot <- renderPlotly({
+    filtered.stocks <- stocks %>%
       filter(stocks$symbol == input$selected_stock
              & stocks$date >= input$selected_date_range[1]
-             & stocks$date <= input$selected_date_range[2]) %>%
+             & stocks$date <= input$selected_date_range[2])
+    stockplot <- filtered.stocks %>%
       autoplot(close) +
       labs(title = input$selected_stock)
+    
+    # stockplot <- filtered.stocks %>%
+    #   model(ARIMA(close)) %>%     # stays same
+    #   forecast(h = "10 years") %>%  # change forecast horizon as youd like
+    #   autoplot(filtered.stocks)      # the orginal data forecasted
+    # 
     if (input$trendline == TRUE) {
       stockplot <- stockplot + geom_smooth(method = lm)
     }
-    stockplot
+    
+    ggplotly(stockplot)
   })
   
-  
-  output$min <- renderText({
-    min(stocks[stocks$symbol == input$selected_stock
-               & stocks$date >= input$selected_date_range[1]
-               & stocks$date <= input$selected_date_range[2], ]$close)
-  })
-  
-  
-  output$max <- renderText({
-    max(stocks[stocks$symbol == input$selected_stock
-               & stocks$date >= input$selected_date_range[1]
-               & stocks$date <= input$selected_date_range[2], ]$close)
-  })
-  
-  
-  output$stock.growth <- renderText({
+  output$invest.out <- renderValueBox({
     stock.sub <- subset(stocks,
                         stocks$symbol == input$selected_stock
                         & stocks$date >= input$selected_date_range[1]
@@ -41,11 +29,52 @@ server <- function(input, output) {
     stock.closes <- stock.sub[stock.sub$date == input$selected_date_range[1]
                               | stock.sub$date == input$selected_date_range[2], ]$close
     
-    stock.closes[2] / stock.closes[1]
+    final.investment <- (stock.closes[2] / stock.closes[1]) * input$investment
+    valueBox(format_dollars(final.investment), "Investment Value", color = "green", icon = icon("dollar-sign"))
+  })
+  
+  output$max.invest <- renderValueBox({
+    # browser()
+    max.per.share <- max(stocks[stocks$symbol == input$selected_stock
+                                & stocks$date >= input$selected_date_range[1]
+                                & stocks$date <= input$selected_date_range[2], ]$close)
+    purchase.price <- stocks[stocks$symbol == input$selected_stock
+                             & stocks$date == input$selected_date_range[1], ]$close
+    maximum.investment <- (max.per.share / purchase.price) * input$investment
+    valueBox(format_dollars(maximum.investment), "Maximum Investment Value", color = "green", icon = icon("dollar-sign"))
+  })
+  
+  output$min <- renderValueBox({
+    min.value <- min(stocks[stocks$symbol == input$selected_stock
+                            & stocks$date >= input$selected_date_range[1]
+                            & stocks$date <= input$selected_date_range[2], ]$close)
+    valueBox(format_dollars(min.value), "Minimum Share Price", color = "green", icon = icon("dollar-sign"))
   })
   
   
-  output$industry.growth <- renderText({
+  output$max <- renderValueBox({
+    max.value <- max(stocks[stocks$symbol == input$selected_stock
+                            & stocks$date >= input$selected_date_range[1]
+                            & stocks$date <= input$selected_date_range[2], ]$close)
+    valueBox(format_dollars(max.value), "Maximum Share Price", color = "green", icon = icon("dollar-sign"))
+  })
+  
+  
+  output$stock.growth <- renderValueBox({
+    stock.sub <- subset(stocks,
+                        stocks$symbol == input$selected_stock
+                        & stocks$date >= input$selected_date_range[1]
+                        & stocks$date <= input$selected_date_range[2])
+    
+    stock.closes <- stock.sub[stock.sub$date == input$selected_date_range[1]
+                              | stock.sub$date == input$selected_date_range[2], ]$close
+    
+    growth <- stock.closes[2] / stock.closes[1] * 100
+    valueBox(format_percent(growth), "Stock Growth", icon = icon("percent"))
+  })
+  
+  
+  output$industry.growth <- renderValueBox({
     stock.sub <- subset(stocks,
                         stocks$symbol == input$selected_stock)
     
@@ -65,11 +94,17 @@ server <- function(input, output) {
     
     industry.growth <- mean(industry.closes[2]) / mean(industry.closes[1]) - 1
     
-    stock.growth - industry.growth
+    relative.growth <- stock.growth - industry.growth * 100
+    
+    valueBox(format_percent(relative.growth), "Stock Growth vs. Industry Growth", icon = icon("percent"))
   })
   
   
-  output$industry <- renderText({
-    unique(stocks[stocks$symbol == input$selected_stock, ]$gics_sector)
+  output$industry <- renderValueBox({
+    stock.industry <- unique(stocks[stocks$symbol == input$selected_stock, ]$gics_sector)
+    valueBox(tags$p(stock.industry, style = "font-size: 70%;"),
+             subtitle = tags$p("Industry", style = "font-size: 100%;"),
+             color = "purple",
+             icon = icon("bars"))
   })
 }

@@ -2,6 +2,7 @@ library(fpp3)
 library(dplyr)
 library(tidyverse)
 library(tsibble)
+library(forecast)
 
 # Read data
 stocks <- read.csv("nyse_stocks.csv")

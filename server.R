@@ -1,3 +1,5 @@
+install.packages("forecast")
+
 server <- function(input, output) {
   output$abbr <- renderText({
     stocks[stocks$symbol == input$selected_stock, ]
@@ -62,5 +64,10 @@ server <- function(input, output) {
     industry.growth <- mean(industry.closes[2]) / mean(industry.closes[1]) - 1
     
     stock.growth - industry.growth
+  })
+  
+  
+  output$industry <- renderText({
+    unique(stocks[stocks$symbol == input$selected_stock, ]$gics_sector)
   })
 }

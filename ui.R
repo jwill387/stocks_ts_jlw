@@ -28,5 +28,7 @@ ui <- fluidPage(
   h3(print("Stock Growth:")),
   h4(textOutput("stock.growth")),
   h3(print("Stock Growth vs. Industry Growth:")),
-  h4(textOutput("industry.growth"))
+  h4(textOutput("industry.growth")),
+  h3(print("Industry:")),
+  h4(textOutput("industry"))
 )

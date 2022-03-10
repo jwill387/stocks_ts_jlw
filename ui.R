@@ -29,13 +29,13 @@ ui <- dashboardPage(
     )
   ),
   dashboardBody(
-  plotlyOutput("ts.plot"),
-  infoBoxOutput("invest.out"),
-  infoBoxOutput("max.invest"),
-  infoBoxOutput("min"),
-  infoBoxOutput("max"),
-  infoBoxOutput("stock.growth"),
-  infoBoxOutput("industry.growth"),
-  infoBoxOutput("industry")
-)
+    plotlyOutput("ts.plot"),
+    infoBoxOutput("invest.out"),
+    infoBoxOutput("max.invest"),
+    infoBoxOutput("min"),
+    infoBoxOutput("max"),
+    infoBoxOutput("stock.growth"),
+    infoBoxOutput("industry.growth"),
+    infoBoxOutput("industry")
+  )
 )

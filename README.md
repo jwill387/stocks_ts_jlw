@@ -3,7 +3,7 @@
 Project Features
 1) Time Series Graph
   a. The user selected a stock symbol from a drop-down list and a date range
-  b. A reactive time series graph will appear for the stock and date range
+  b. A reactive time series graph will appear for the stock and date range with the security name as the graph label
   c. The user can hover over the graph to see more information about specific dates on the graph
   d. The user can also click and drag the mouse over the graph to zoom in
     1. Double-click to zoom out to the original zoom setting
@@ -25,4 +25,7 @@ Project Features
 4) Investment Calculator
  a. The same stock symbol and date range specified by the user are used to calculate the simulated investment
  b. The user inputs a number as their "Initial Investment" at the given start date
- c. 
+ c. The "Investment Value" displays what the users initial investment would be worth at the end of their selected date range
+   1. This is calculated by multiplying the "Initial Investment" by the respective stocks growth over their date range
+ d. The "Maximum Investment Value" displays the dollar amount that the users investment was worth at the time of the share price's maximum     over the selected date range
+   1. This is calculated by multiplying the "Initial Investment" by the respective stocks growth from the selected start date to the point       where the share price is most expensive.

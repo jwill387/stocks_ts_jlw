@@ -23,18 +23,3 @@ format_percent <- function(x) {
   rounded <- sprintf("%.1f", x)
   paste0(rounded, "%")
 }
-# 
-# # Plotting 1 stock
-# selected_stock <- "AAPL"
-# 
-# stocks %>%
-#   filter(symbol == selected_stock) %>%
-#   autoplot(volume) +
-#   labs(title = selected_stock)
-# 
-# # Plotting multiple stocks
-# selected_stocks <- c("GOOG", "AAPL")
-# 
-# stocks %>%
-#   filter(symbol %in% selected_stocks) %>%
-#   autoplot(volume)

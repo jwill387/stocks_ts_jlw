@@ -8,15 +8,9 @@ server <- function(input, output) {
       autoplot(close) +
       labs(title = input$selected_stock)
     
-    # stockplot <- filtered.stocks %>%
-    #   model(ARIMA(close)) %>%     # stays same
-    #   forecast(h = "10 years") %>%  # change forecast horizon as youd like
-    #   autoplot(filtered.stocks)      # the orginal data forecasted
-    # 
     if (input$trendline == TRUE) {
       stockplot <- stockplot + geom_smooth(method = lm)
     }
-    
     ggplotly(stockplot)
   })
   

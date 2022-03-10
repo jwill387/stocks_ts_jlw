@@ -20,6 +20,12 @@ ui <- fluidPage(
     end = max(stocks$date)
   ),
   
+  checkboxInput(
+    inputId = "trendline",
+    label = "Trend line",
+    value = TRUE
+  ),
+  
   plotOutput("ts.plot"),
   h3("Minimum Share Price:"),
   h4(textOutput("min")),

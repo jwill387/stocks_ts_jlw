@@ -1,5 +1,3 @@
-install.packages("forecast")
-
 server <- function(input, output) {
   output$abbr <- renderText({
     stocks[stocks$symbol == input$selected_stock, ]

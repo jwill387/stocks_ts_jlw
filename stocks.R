@@ -5,7 +5,7 @@ library(tsibble)
 library(readr)
 
 # Read data
-stocks <- read_csv("nyse_stocks.csv.zip")
+stocks <- read.csv("nyse_stocks.csv.zip")
 
 #Convert to tsibble()
 stocks$date <- as.Date(stocks$date)

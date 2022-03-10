@@ -5,12 +5,16 @@ server <- function(input, output) {
   
   
   output$ts.plot <- renderPlot({
-    stocks %>%
+    stockplot <- stocks %>%
       filter(stocks$symbol == input$selected_stock
              & stocks$date >= input$selected_date_range[1]
              & stocks$date <= input$selected_date_range[2]) %>%
       autoplot(close) +
       labs(title = input$selected_stock)
+    if (input$trendline == TRUE) {
+      stockplot <- stockplot + geom_smooth(method = lm)
+    }
+    stockplot
   })
   
   

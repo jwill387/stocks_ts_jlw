@@ -2,9 +2,10 @@ library(fpp3)
 library(dplyr)
 library(tidyverse)
 library(tsibble)
+library(readr)
 
 # Read data
-stocks <- read.csv("nyse_stocks.csv")
+stocks <- read_csv("nyse_stocks.csv.zip")
 
 #Convert to tsibble()
 stocks$date <- as.Date(stocks$date)

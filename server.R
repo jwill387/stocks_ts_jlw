@@ -24,7 +24,10 @@ server <- function(input, output) {
                               | stock.sub$date == input$selected_date_range[2], ]$close
     
     final.investment <- (stock.closes[2] / stock.closes[1]) * input$investment
-    valueBox(format_dollars(final.investment), "Investment Value", color = "green", icon = icon("dollar-sign"))
+    valueBox(format_dollars(final.investment),
+             "Investment Value",
+             color = "green",
+             icon = icon("dollar-sign"))
   })
   
   output$max.invest <- renderValueBox({
@@ -35,14 +38,20 @@ server <- function(input, output) {
     purchase.price <- stocks[stocks$symbol == input$selected_stock
                              & stocks$date == input$selected_date_range[1], ]$close
     maximum.investment <- (max.per.share / purchase.price) * input$investment
-    valueBox(format_dollars(maximum.investment), "Maximum Investment Value", color = "green", icon = icon("dollar-sign"))
+    valueBox(format_dollars(maximum.investment),
+             "Maximum Investment Value",
+             color = "green",
+             icon = icon("dollar-sign"))
   })
   
   output$min <- renderValueBox({
     min.value <- min(stocks[stocks$symbol == input$selected_stock
                             & stocks$date >= input$selected_date_range[1]
                             & stocks$date <= input$selected_date_range[2], ]$close)
-    valueBox(format_dollars(min.value), "Minimum Share Price", color = "green", icon = icon("dollar-sign"))
+    valueBox(format_dollars(min.value),
+             "Minimum Share Price",
+             color = "green",
+             icon = icon("dollar-sign"))
   })
   
   
@@ -50,7 +59,10 @@ server <- function(input, output) {
     max.value <- max(stocks[stocks$symbol == input$selected_stock
                             & stocks$date >= input$selected_date_range[1]
                             & stocks$date <= input$selected_date_range[2], ]$close)
-    valueBox(format_dollars(max.value), "Maximum Share Price", color = "green", icon = icon("dollar-sign"))
+    valueBox(format_dollars(max.value),
+             "Maximum Share Price",
+             color = "green",
+             icon = icon("dollar-sign"))
   })
   
   
@@ -64,7 +76,9 @@ server <- function(input, output) {
                               | stock.sub$date == input$selected_date_range[2], ]$close
     
     growth <- stock.closes[2] / stock.closes[1] * 100
-    valueBox(format_percent(growth), "Stock Growth", icon = icon("percent"))
+    valueBox(format_percent(growth),
+             "Stock Growth",
+             icon = icon("percent"))
   })
   
   
@@ -90,7 +104,9 @@ server <- function(input, output) {
     
     relative.growth <- stock.growth - industry.growth * 100
     
-    valueBox(format_percent(relative.growth), "Stock Growth vs. Industry Growth", icon = icon("percent"))
+    valueBox(format_percent(relative.growth),
+             "Stock Growth vs. Industry Growth",
+             icon = icon("percent"))
   })
   
   

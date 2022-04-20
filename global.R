@@ -5,6 +5,7 @@ library(tsibble)
 library(readr)
 library(shinydashboard)
 library(plotly)
+library(quantmod)
 
 # Read data
 stocks <- read_csv("nyse_stocks.csv.zip")

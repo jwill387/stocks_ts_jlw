@@ -19,7 +19,7 @@ ui <- dashboardPage(
     numericInput(
       inputId = "investment",
       label = "Enter Initial Investment:",
-      value = 1
+      value = 100
     ),
     
     checkboxInput(
